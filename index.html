@@ -205,27 +205,18 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
 
     <p class="text abstract">
       <!-- <strong>vision-<i>centric</i></strong> -->
-      We introduce ScienceBoard, a realistic and multimodal environment designed to evaluate and advance computer-using
-      agents for scientific discovery. By integrating domain-specific software and curating a benchmark of validated
-      workflows, ScienceBoard enables rigorous assessment of agents’ abilities to operate in real scientific settings.
+     We introduce a study focused on safety-enhanced mobile GUI agents. This work features OS-Sentinel, a novel hybrid detection framework. We also present MobileRisk-Live, a dynamic sandbox environment, and MobileRisk, a corresponding safety benchmark. Together, this suite of tools enables robust evaluation and detection of multifaceted safety risks in realistic mobile workflows.
 
       <br><br>
-      ScienceBoard is built around the following components, aiming for synthesizing high-quality trajectory data for GUI
-      agents:
+    OS-Sentinel is built around the following components, aiming for the systematic evaluation and detection of safety risks in mobile agents:
     <ol class="text">
-      <li><strong><a href="#visual_representations">&sect;Computer-using Agents for Scientific Discovery</a></strong>:
-        ScienceBoard pioneers the application of computer-using agents to real-world scientific discovery, enabling
-        digital automation for complex science tasks.</li>
-      <li><strong><a href="#connector_design">&sect;Infra for Scientific Discovery</a></strong>: ScienceBoard provides a
-        visually rich and dynamically configurable Ubuntu-based VM serves as the scientific playground, supporting both
-        GUI and CLI interactions and enabling agents to perform end-to-end tasks like simulation and computation.
+      <li><strong><a href="#visual_representations">&sect;Safety for Mobile GUI Agents</a></strong>:
+        OS-Sentinel addresses the critical, underexplored challenge of agent safety on mobile platforms, tackling multifaceted risks ranging from inadvertent privacy leakage and offensive content to system compromise.</li>
+      <li><strong><a href="#connector_design">&sect;Dynamic Sandbox Environment</a></strong>: This work provides MobileRisk-Live, a dynamic and extendable Android emulator-based sandbox. It supports real-time agent interaction while recording both GUI observations and underlying system state traces, which are critical for safety analysis.
       </li>
-      <li><strong><a href="#instruction_data">&sect;Challenging Benchmark</a></strong>: We curate a benchmark of 169
-        human-annotated tasks across 6 scientific domains, each paired with automated evaluation functions for reliable
+      <li><strong><a href="#instruction_data">&sect;Realistic Safety Benchmark</a></strong>: We derive MobileRisk, a benchmark of fine-grained mobile agent trajectories built from frozen trajectories captured in MobileRisk-Live. These trajectories underwent human inspection and calibration before being annotated at both the step and trajectory level, covering a comprehensive taxonomy of 10 distinct risk categories.
         task validation.</li>
-      <li><strong><a href="#eval-result">&sect;Systematic Evaluation and Analysis</a></strong>: Comprehensive
-        experiments are conducted with state-of-the-art LLMs, VLMs, and GUI action models. We further provide insights
-        into current agent limitations and guiding future research.</li>
+      <li><strong><a href="#eval-result">&sect;Hybrid Detection and Validation</a></strong>: We propose a novel hybrid detection framework that combines a Formal Verifier for deterministic system-level violations with a VLM-based Contextual Judge for nuanced, context-dependent risks. Extensive experiments show this approach achieves 10-30% improvement over baselines, providing critical insights for developing safer mobile agents.</li>
     </ol>
     </p>
 
@@ -263,10 +254,9 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
 
 
     <p class="text abstract">
-      We will release all <a href="https://github.com/OS-Copilot/ScienceBoard"
-        target="_blank">codes for infra</a>, benchmark evaluation pipelines and more
-      details. We hope ScienceBoard can inspire and boost future research advancing computer-using agents in scientific
-      workflows.
+      We will release all <a href="https://github.com/OS-Copilot/OS-Sentinel"
+        target="_blank">codes for infra</a>, method, and benchmarking pipelines and more
+      details. We hope this work can inspire and boost future research advancing the safety of mobile GUI agents.
     </p>
 
     <p class="text">
@@ -277,7 +267,7 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
       <p class="text ol"><b>2025-10-29</b> Initial release of our <a href="https://arxiv.org/abs/2510.24411">paper</a>, environment, benchmark, and <a href="#">🌐 Project Website</a>. Check it out! 🚀 </p>
     </p>
 
-    <h1 class="text" id="main-pipeline">Computer-using Agents for Science</h1>
+    <h1 class="text" id="main-pipeline">Safety Issues of Mobile GUI Agents</h1>
 
     <p class="text">
       Large Language Models (LLMs) and Vision-Language Models (VLMs) have significantly advanced the development of
@@ -292,7 +282,7 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
       agents to execute precise interactions grounded in both visual perception and scientific knowledge.
     </p>
 
-    <img src="public/traj.gif" width="100%">
+    <img src="public/os-sentinel-example.png" width="100%">
 
 
     <p class="text">
@@ -302,7 +292,7 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
     </p>
 
 
-    <h1 class="text">ScienceBoard Environment</h1>
+    <h1 class="text">MobileRisk-Live: Testbed for Mobile Agent Safety</h1>
 
     <p class="text">
       The ScienceBoard Environment offers a dynamic, multimodal platform where agents interact with real scientific
@@ -311,7 +301,7 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
       typing, or issuing terminal commands.
     </p>
 
-    <img src="public/arch.gif" width="100%">
+    <img src="public/mobilerisk-live.png" width="100%">
 
     <p class="text">
       Each software is carefully integrated and adapted to expose internal application states, allowing for fine-grained
@@ -321,7 +311,7 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
     </p>
 
 
-    <h1 class="text">ScienceBoard Benchmark</h1>
+    <h1 class="text">MobileRisk: A Benchmark of Realistic Trajectories</h1>
 
     <p class="text">
       The ScienceBoard Benchmark is a curated suite of 169 high-quality tasks spanning six scientific domains, designed
@@ -422,8 +412,6 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
 
     <hr>
 
-
-
     <div id='visual-representation' class="viusal-representation-block">
       <h1 class="text" id="eval-result">Evaluations </h1>
 
@@ -487,23 +475,16 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
     <div id="conclusion" style="position: relative; margin-top: 40px; margin-bottom: 0px;">
       <h2 class="text" style="margin-top:0px; margin-bottom:10px">Conclusion</h2>
       <p class="text">
-        ScienceBoard represents a major step toward building intelligent, computer-using agents for real scientific
-        workflows. By combining a realistic, multimodal environment with a challenging benchmark grounded in domain
-        expertise, ScienceBoard enables rigorous evaluation of agents in tasks far beyond static QA or code generation.
-        Our findings reveal that even top-tier models fall short of human performance, especially in visually complex or
-        domain-specific scenarios. However, modular designs, multimodal input, and agent specialization show promising
-        gains—pointing to a path forward. ScienceBoard lays the foundation for the next generation of AI research
-        assistants. We invite the community to explore, evaluate, and build upon this platform to accelerate progress
-        toward truly autonomous scientific discovery.
+We conduct a comprehensive study of safety issues in mobile GUI agents in this work. To support realistic safety research, we introduce MobileRisk-Live and MobileRisk, which provide a dynamic sandbox environment and a benchmark of fine-grained annotations, thereby enabling general-purpose and reproducible evaluation. We then propose OS-Sentinel, a novel hybrid detection framework that unifies deterministic verification with contextual risk assessment based on system state traces, multimodal contents, and agent actions, offering broader and deeper coverage than prior approaches.  Extensive experiments and analyses demonstrate the value and reliability of our newly proposed testbeds and strategies.  By contributing infrastructure, methodology, and empirical insights, this work establishes a new paradigm and moves the field forward toward safety-enhanced mobile GUI agents.
       </p>
     </div>
 
     <div id="Acknowledgement" style="position: relative; margin-top: 40px; margin-bottom: 0px;">
       <h2 class="text" style="margin-top:0px; margin-bottom:10px">Acknowledgement</h2>
       <p class="text">
-        We would like to thank <a href="https://github.com/xlang-ai/OSWorld" target="_blank">OSWorld</a> <d-cite
-        key="OSWorld"></d-cite> authors for
-        helping us tackle various issues in building infra and task evaluation, as well as the <a
+        We would like to thank <a href="https://github.com/xlang-ai/OSWorld" target="_blank">AndroidWorld</a> <d-cite
+        key="OSWorld"></d-cite> and MobileSafetyBench authors for
+        providing infra and baselines, as well as the <a
           href="https://cambrian-mllm.github.io/" target="_blank">Cambrian</a> authors for providing this webpage
         template.
       </p>
