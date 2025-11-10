@@ -454,18 +454,141 @@
         The results are shown in <a href="#leaderboard">Table 1</a>
       </p>
 
-      <div class="text" style="display: flex; margin-top: 12px; margin-bottom: 8px;">
-        <button class="button is-active" onclick="externalOptionChange(this, 'screenshot')">Screenshot</button>
-        <button class="button is-active avoid-attach" onclick="externalOptionChange(this, 'a11y_tree')">A11y
-          Tree</button>
-        <button class="button is-active avoid-attach"
-          onclick="externalOptionChange(this, 'screenshot+a11y_tree')">Screenshot + A11y Tree</button>
-        <button class="button is-active avoid-attach" onclick="externalOptionChange(this, 'set_of_marks')">Set of
-          Marks</button>
-        <input class="input avoid-attach" type="text" oninput="externalFilterChange(event)" style="font-family: serif;"
-          placeholder="Search by keywords">
+      <div id="tab:mobile" style="display: flex; flex-direction: column; align-items: center;">
+        <div id="leaderboard" class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th rowspan="2" class="tb-hdr">Method</th>
+                <th rowspan="2" class="tb-hdr">Observation</th>
+                <th rowspan="2" class="tb-hdr">Step-Level</th>
+                <th colspan="2" class="tb-hdr">Traj-Level (Consecutive)</th>
+                <th colspan="2" class="tb-hdr">Traj-Level (Sampled)</th>
+              </tr>
+              <tr>
+                <th class="tb-hdr">Acc</th>
+                <th class="tb-hdr">F1</th>
+                <th class="tb-hdr">Acc</th>
+                <th class="tb-hdr">F1</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Rule-based Evaluators</td>
+                <td>-</td>
+                <td>19.8</td>
+                <td>54.5</td>
+                <td>52.7</td>
+                <td>53.8</td>
+                <td>57.4</td>
+              </tr>
+              <tr>
+                <td style="border: 0;">gpt-oss-120B</td>
+              </tr>
+              <tr>
+                <td>LLM-as-a-Judge </td>
+                <td rowspan="2">a11ytree</td>
+                <td>27.3</td>
+                <td>57.4</td>
+                <td>56.3</td>
+                <td>51.0</td>
+                <td>41.9</td>
+              </tr>
+              <tr>
+                <td>OS-Sentinel</td>
+                <td>27.6</td>
+                <td>58.3</td>
+                <td>65.3</td>
+                <td>56.9</td>
+                <td>62.1</td>
+              </tr>
+              <tr>
+                <td style="border: 0;">Qwen2.5-VL-7B-Instruct</td>
+              </tr>
+              <tr>
+                <td>LLM-as-a-Judge </td>
+                <td rowspan="2">screenshot</td>
+                <td>25.9</td>
+                <td>56.4</td>
+                <td>54.8</td>
+                <td>56.9</td>
+                <td>48.2</td>
+              </tr>
+              <tr>
+                <td>OS-Sentinel</td>
+                <td>26.1</td>
+                <td>57.4</td>
+                <td>65.6</td>
+                <td>60.3</td>
+                <td>66.1</td>
+              </tr>
+              <tr>
+                <td style="border: 0;">GPT-4o</td>
+              </tr>
+              <tr>
+                <td>LLM-as-a-Judge </td>
+                <td rowspan="2">screenshot</td>
+                <td>23.5</td>
+                <td>60.8</td>
+                <td>56.0</td>
+                <td>56.9</td>
+                <td>40.5</td>
+              </tr>
+              <tr>
+                <td>OS-Sentinel</td>
+                <td>23.3</td>
+                <td>60.8</td>
+                <td>66.1</td>
+                <td>60.8</td>
+                <td>64.9</td>
+              </tr>
+              <tr>
+                <td style="border: 0;">GPT-4o mini</td>
+              </tr>
+              <tr>
+                <td>LLM-as-a-Judge </td>
+                <td rowspan="2">screenshot</td>
+                <td>12.5</td>
+                <td>57.8</td>
+                <td>36.8</td>
+                <td>56.9</td>
+                <td>33.3</td>
+              </tr>
+              <tr>
+                <td>OS-Sentinel</td>
+                <td>20.6</td>
+                <td>61.8</td>
+                <td>63.9</td>
+                <td>59.3</td>
+                <td>61.4</td>
+              </tr>
+              <tr>
+                <td style="border: 0;">Claude-3.7-Sonnet</td>
+              </tr>
+              <tr>
+                <td>LLM-as-a-Judge </td>
+                <td rowspan="2">screenshot</td>
+                <td>19.6</td>
+                <td>58.3</td>
+                <td>56.9</td>
+                <td>59.3</td>
+                <td>52.0</td>
+              </tr>
+              <tr>
+                <td>OS-Sentinel</td>
+                <td>22.2</td>
+                <td>61.3</td>
+                <td>66.9</td>
+                <td>62.3</td>
+                <td>67.0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption style="text-align: center; width: 140%;">
+          Table 1: Performance on AndroidWorld and AndroidControl benchmarks.
+        </figcaption>
       </div>
-      <div class="text" id="leaderboard" style="height: 750px; margin-top: 0;"></div>
 
       <p class="text">
         <strong>Domain-Specific Challenges:</strong> Agents perform relatively well on algebra and biochemistry tasks,
@@ -670,479 +793,6 @@
     },
     plugins: [ChartDataLabels]
   });
-
-  let filterCondition = {
-    "screenshot": true,
-    "a11y_tree": true,
-    "screenshot+a11y_tree": true,
-    "set_of_marks": true,
-    "input": ""
-  };
-
-  const doesExternalFilterPass = (node) => {
-    if (!node.data) {
-      return true;
-    }
-
-    const contains = (obs) => filterCondition[obs] && node.data.model.includes(obs);
-    const hasInput = node.data.model.includes(filterCondition["input"]);
-    return hasInput && (
-      (contains("screenshot") && !node.data.model.includes("screenshot+a11y_tree"))
-      || (contains("a11y_tree") && !node.data.model.includes("screenshot+a11y_tree"))
-      || contains("screenshot+a11y_tree")
-      || contains("set_of_marks")
-    );
-  }
-
-  const externalOptionChange = (element, option) => {
-    if (element.classList.contains("is-active")) {
-      element.classList.remove("is-active");
-    } else {
-      element.classList.add("is-active");
-    }
-
-    filterCondition[option] = !filterCondition[option];
-    document.gridApi.onFilterChanged();
-  };
-
-  const externalFilterChange = (event) => {
-    document.gridApi.setGridOption("quickFilterText", event.target.value);
-  }
-
-  const gridOptions = {
-    rowData: [
-      {
-        icon: "chatgpt-icon.svg",
-        model: "GPT-4o (2024-08-06) w/ screenshot",
-        alg: 3.23,
-        bio: 0.00,
-        gis: 0.00,
-        atp: 0.00,
-        ast: 0.00,
-        doc: 6.25,
-        acc: 1.58,
-      },
-      {
-        icon: "claude-ai-icon.png",
-        model: "Calude-3.7-Sonnet w/ screenshot",
-        alg: 9.67,
-        bio: 37.93,
-        gis: 2.94,
-        atp: 0.00,
-        ast: 6.06,
-        doc: 6.25,
-        acc: 10.48
-      },
-      {
-        icon: "google-gemini-icon.svg",
-        model: "Gemini-2.0-Flash w/ screenshot",
-        alg: 6.45,
-        bio: 3.45,
-        gis: 2.94,
-        atp: 0.00,
-        ast: 0.00,
-        doc: 6.06,
-        acc: 3.15
-      },
-      {
-        icon: "qwen.png",
-        model: "Qwen2.5-VL-72B w/ screenshot",
-        alg: 22.58,
-        bio: 27.59,
-        gis: 5.88,
-        atp: 0.00,
-        ast: 9.09,
-        doc: 12.50,
-        acc: 12.94
-      },
-      {
-        icon: "pjlab.png",
-        model: "InternVL3-78B w/ screenshot",
-        alg: 6.45,
-        bio: 3.45,
-        gis: 0.00,
-        atp: 0.00,
-        ast: 0.00,
-        doc: 6.25,
-        acc: 2.69
-      },
-      {
-        icon: "ui_tars_logo.png",
-        model: "UI-TARS-1.5 w/ screenshot",
-        alg: 12.90,
-        bio: 13.79,
-        gis: 0.00,
-        atp: 0.00,
-        ast: 6.06,
-        doc: 0.00,
-        acc: 5.92
-      },
-      {
-        icon: "chatgpt-icon.svg",
-        model: "GPT-4o (2024-08-06) w/ a11y_tree",
-        alg: 12.90,
-        bio: 20.69,
-        gis: 2.94,
-        atp: 0.00,
-        ast: 0.00,
-        doc: 6.06,
-        acc: 7.10
-      },
-      {
-        icon: "claude-ai-icon.png",
-        model: "Calude-3.7-Sonnet w/ a11y_tree",
-        alg: 19.35,
-        bio: 34.48,
-        gis: 2.94,
-        atp: 3.85,
-        ast: 12.12,
-        doc: 0.00,
-        acc: 12.12
-      },
-      {
-        icon: "google-gemini-icon.svg",
-        model: "Gemini-2.0-Flash w/ a11y_tree",
-        alg: 9.68,
-        bio: 17.24,
-        gis: 0.00,
-        atp: 0.00,
-        ast: 0.00,
-        doc: 0.00,
-        acc: 4.49
-      },
-      {
-        icon: "chatgpt-icon.svg",
-        model: "o3-mini (2025-01-31) w/ a11y_tree",
-        alg: 16.13,
-        bio: 20.69,
-        gis: 2.94,
-        atp: 3.85,
-        ast: 15.15,
-        doc: 6.25,
-        acc: 10.84
-      },
-      {
-        icon: "qwen.png",
-        model: "Qwen2.5-VL-72B w/ a11y_tree",
-        alg: 9.68,
-        bio: 10.34,
-        gis: 2.94,
-        atp: 0.00,
-        ast: 3.03,
-        doc: 0.00,
-        acc: 4.33
-      },
-      {
-        icon: "pjlab.png",
-        model: "InternVL3-78B w/ a11y_tree",
-        alg: 3.23,
-        bio: 3.45,
-        gis: 0.00,
-        atp: 0.00,
-        ast: 0.00,
-        doc: 0.00,
-        acc: 1.11
-      },
-      {
-        icon: "chatgpt-icon.svg",
-        model: "GPT-OSS w/ a11y_tree",
-        alg: 19.35,
-        bio: 13.79,
-        gis: 0.00,
-        atp: 0.00,
-        ast: 9.09,
-        doc: 0.00,
-        acc: 7.69
-      },
-      {
-        icon: "chatgpt-icon.svg",
-        model: "GPT-4o (2024-08-06) w/ screenshot+a11y_tree",
-        alg: 22.58,
-        bio: 37.93,
-        gis: 2.94,
-        atp: 7.69,
-        ast: 3.03,
-        doc: 12.50,
-        acc: 14.45
-      },
-      {
-        icon: "claude-ai-icon.png",
-        model: "Calude-3.7-Sonnet w/ screenshot+a11y_tree",
-        alg: 12.90,
-        bio: 41.37,
-        gis: 8.82,
-        atp: 3.85,
-        ast: 9.09,
-        doc: 18.75,
-        acc: 15.79
-      },
-      {
-        icon: "google-gemini-icon.svg",
-        model: "Gemini-2.0-Flash w/ screenshot+a11y_tree",
-        alg: 16.13,
-        bio: 24.14,
-        gis: 2.94,
-        atp: 0.00,
-        ast: 18.18,
-        doc: 12.50,
-        acc: 12.32
-      },
-      {
-        icon: "qwen.png",
-        model: "Qwen2.5-VL-72B w/ screenshot+a11y_tree",
-        alg: 16.13,
-        bio: 20.69,
-        gis: 2.94,
-        atp: 0.00,
-        ast: 18.18,
-        doc: 12.50,
-        acc: 11.74
-      },
-      {
-        icon: "pjlab.png",
-        model: "InternVL3-78B w/ screenshot+a11y_tree",
-        alg: 6.45,
-        bio: 3.45,
-        gis: 0.00,
-        atp: 0.00,
-        ast: 3.03,
-        doc: 6.25,
-        acc: 3.20
-      },
-      {
-        icon: "chatgpt-icon.svg",
-        model: "GPT-4o (2024-08-06) w/ set_of_marks",
-        alg: 6.45,
-        bio: 3.45,
-        gis: 0.00,
-        atp: 0.00,
-        ast: 3.03,
-        doc: 12.50,
-        acc: 14.45
-      },
-      {
-        icon: "claude-ai-icon.png",
-        model: "Calude-3.7-Sonnet w/ set_of_marks",
-        alg: 16.13,
-        bio: 31.03,
-        gis: 5.88,
-        atp: 0.00,
-        ast: 6.06,
-        doc: 12.50,
-        acc: 11.93
-      },
-      {
-        icon: "google-gemini-icon.svg",
-        model: "Gemini-2.0-Flash w/ set_of_marks",
-        alg: 3.23,
-        bio: 0.00,
-        gis: 0.00,
-        atp: 0.00,
-        ast: 3.03,
-        doc: 6.25,
-        acc: 2.09
-      },
-      {
-        icon: "qwen.png",
-        model: "Qwen2.5-VL-72B w/ set_of_marks",
-        alg: 6.45,
-        bio: 6.90,
-        gis: 2.94,
-        atp: 0.00,
-        ast: 3.03,
-        doc: 12.50,
-        acc: 6.36
-      },
-      {
-        icon: "qwen.png",
-        model: "QvQ-72B-Preview w/ set_of_marks",
-        alg: 0.00,
-        bio: 0.00,
-        gis: 2.94,
-        atp: 0.00,
-        ast: 3.03,
-        doc: 0.00,
-        acc: 0.49
-      },
-      {
-        icon: "pjlab.png",
-        model: "InternVL3-78B w/ set_of_marks",
-        alg: 3.23,
-        bio: 6.90,
-        gis: 2.94,
-        atp: 0.00,
-        ast: 0.00,
-        doc: 0.00,
-        acc: 2.18
-      }
-    ],
-    columnDefs: [
-      {
-        field: "icon",
-        headerName: "Org.",
-        cellRenderer: function(params) {
-          return `<img src='public/logos/${params.value}'/>`
-        },
-        lockPosition: true,
-        suppressMovable: true,
-        flex: 0.5
-      },
-      {
-        field: "model",
-        headerName: "Settings",
-        flex: 2.5
-      },
-      {
-        field: "acc",
-        headerName: "% Acc",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-        sort: "desc"
-      },
-      {
-        field: "alg",
-        headerName: "% Alg",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-      },
-      {
-        field: "bio",
-        headerName: "% Biochem",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-      },
-      {
-        field: "gis",
-        headerName: "% GIS",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-      },
-      {
-        field: "atp",
-        headerName: "% ATP",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-      },
-      {
-        field: "ast",
-        headerName: "% Astron",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-      },
-      {
-        field: "doc",
-        headerName: "% Doc",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-      }
-    ],
-    isExternalFilterPresent: () => true,
-    doesExternalFilterPass: doesExternalFilterPass
-  };
-  const gridElement = document.querySelector("#leaderboard");
-  document.gridApi = agGrid.createGrid(gridElement, gridOptions);
-
-  const gridOptionsSeeact = {
-    rowData: [
-      {
-        icon: "Microsoft_icon.svg.png",
-        model: "GPT-4o (2024-08-06) -> GUI-Actor w/ screenshot",
-        alg: 21.88,
-        bio: 44.83,
-        gis: 2.94,
-        ast: 12.12,
-        acc: 20.44
-      },
-      {
-        icon: "pjlab.png",
-        model: "GPT-4o (2024-08-06) -> OS-Atlas-Pro-7B w/ screenshot",
-        alg: 6.25,
-        bio: 10.34,
-        gis: 0.00,
-        ast: 3.03,
-        acc: 4.92
-      },
-      {
-        icon: "osu-nlp.jpg",
-        model: "GPT-4o (2024-08-06) -> UGround-V1-7B w/ screenshot",
-        alg: 0.00,
-        bio: 3.45,
-        gis: 0.00,
-        ast: 3.03,
-        acc: 1.62
-      },
-      {
-        icon: "qwen.png",
-        model: "GPT-4o (2024-08-06) -> Qwen2.5-VL-7B w/ screenshot",
-        alg: 12.50,
-        bio: 34.48,
-        gis: 11.76,
-        ast: 9.09,
-        acc: 16.96
-      },
-      {
-        icon: "ui_tars_logo.png",
-        model: "GPT-4o (2024-08-06) -> UI-TARS-72B w/ screenshot",
-        alg: 3.23,
-        bio: 10.34,
-        gis: 5.88,
-        ast: 6.06,
-        acc: 6.38
-      }
-    ],
-    columnDefs: [
-      {
-        field: "icon",
-        headerName: "Org.",
-        cellRenderer: function(params) {
-          return `<img src='public/logos/${params.value}'/>`
-        },
-        lockPosition: true,
-        suppressMovable: true,
-        flex: 0.5
-      },
-      {
-        field: "model",
-        headerName: "Settings",
-        flex: 4.5
-      },
-      {
-        field: "acc",
-        headerName: "% Acc",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-        sort: "desc"
-      },
-      {
-        field: "alg",
-        headerName: "% Alg",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-      },
-      {
-        field: "bio",
-        headerName: "% Biochem",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-      },
-      {
-        field: "gis",
-        headerName: "% GIS",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-      },
-      {
-        field: "ast",
-        headerName: "% Astron",
-        flex: 1,
-        valueFormatter: (params) => params.value?.toFixed(2),
-      }
-    ],
-    isExternalFilterPresent: () => true,
-    doesExternalFilterPass: doesExternalFilterPass
-  };
-  const gridElementSeeact = document.querySelector("#leaderboard-seeact");
-  agGrid.createGrid(gridElementSeeact, gridOptionsSeeact);
 </script>
 
 </html>
