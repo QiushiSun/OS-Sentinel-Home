@@ -1382,11 +1382,13 @@ div.takeaway-tags img {
 
 .data-table td, .data-table th {
     padding: 0.25em 0.25em;
+    vertical-align: middle;
 }
 
 .data-table th:first-child, .data-table td:first-child {
     /* text-align: right; */
     /* font-weight: bold; */
+    vertical-align: middle;
 }
 
 .tb-hdr {
