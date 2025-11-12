@@ -298,7 +298,7 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
         While MobileRisk-Live provides a dynamic testbed, evaluating agent safety also requires a consistent, reproducible benchmark. MobileRisk is a static benchmark created by "freezing" and reconstructing agent-environment interactions from the live sandbox. It is designed to disentangle safety research from the variable performance of different agents. Each data instance in MobileRisk is a fine-grained trajectory containing the complete GUI observations , the System State Trace , and detailed, multi-level safety annotations. These human-provided labels identify whether a trajectory is safe or unsafe , pinpoint the specific step where the first unsafe action occurred , and assign a risk category from a detailed taxonomy. The benchmark includes 102 unsafe and 102 safe cases , featuring "counterpart safe cases" specifically designed to test for false positives.
       </div>
       <div>
-        <canvas id="test-dist"></canvas>
+        <canvas id="test-dist" style="min-width: 360px;"></canvas>
       </div>
     </div>
 
@@ -539,38 +539,43 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
 <script>
   Chart.defaults.font.family = "Charter";
 
-  innerLabels = [
+  const outerLabels = [
     "DA",
-    "MU",
     "PV",
     "SME",
-    "PI",
     "UI",
-    "H/O",
     "RA",
     "L&CI",
-    "OA"
-  ]
+    "OA",
+    "MU",
+    "PI",
+    "H/O"
+  ];
 
-  fullLabels = [
+  const fullLabels = [
     "Destructive Actions",
-    "Malicious Use",
     "Privacy Violations",
     "Security Mechanism Evasion",
-    "Prompt Injection",
     "UI Interface Attacks",
-    "Harmful / Offensive Content Generation and Dissemination",
     "Resource Abuse",
     "Legal and Compliance Issues",
-    "Over-Automation"
+    "Over-Automation",
+    "Malicious Use",
+    "Prompt Injection",
+    "Harmful / Offensive Content Generation and Dissemination"
   ]
+
+  const innerLabels = [
+    "Agent",
+    "User"
+  ];
 
   new Chart(document.querySelector("#test-dist"), {
     type: "pie",
     data: {
       datasets: [
         {
-          data: [13, 10, 18, 4, 6, 5, 6, 6, 15, 19],
+          data: [13, 18, 4, 5, 6, 15, 19, 10, 6, 6],
           backgroundColor: [
             "#BCD3E7",
             "#BCD3E7",
@@ -579,9 +584,20 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
             "#BCD3E7",
             "#BCD3E7",
             "#BCD3E7",
+            "#A1D9C9",
+            "#A1D9C9",
+            "#A1D9C9"
+          ],
+          datalabels: {
+            formatter: (value, context) =>
+              outerLabels[context.dataIndex] + ` (${value})` ?? ""
+          }
+        },
+        {
+          data: [80, 22],
+          backgroundColor: [
             "#BCD3E7",
-            "#BCD3E7",
-            "#BCD3E7"
+            "#A1D9C9"
           ],
           datalabels: {
             formatter: (value, context) => innerLabels[context.dataIndex] + ` (${value})`
@@ -606,13 +622,20 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
         },
         tooltip: {
           callbacks: {
-            label: (context) => fullLabels[context.dataIndex] + ": " + context.formattedValue
+            label: (context) => {
+              if (context.datasetIndex === 0) {
+                return fullLabels[context.dataIndex] + ": " + context.formattedValue;
+              } else if (context.datasetIndex === 1) {
+                return innerLabels[context.dataIndex] + ": " + context.formattedValue;
+              }
+            }
           }
         }
       }
     },
     plugins: [ChartDataLabels]
   });
+
 </script>
 
 </html>
