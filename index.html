@@ -269,22 +269,9 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
 
     <h1 class="text" id="main-pipeline">Safety Issues of Mobile GUI Agents</h1>
 
-    <p class="text">
-      Large Language Models (LLMs) and Vision-Language Models (VLMs) have significantly advanced the development of
-      autonomous agents capable of interacting with digital systems. Recent progress in computer-using agents<d-cite
-        key="wu2024oscopilot"></d-cite>—agents
-      that operate through GUI and CLI interfaces—has unlocked new possibilities for automating complex workflows in
-      domains like software engineering and web navigation<d-cite key="zhou2024webarena"></d-cite>.
-
-      ScienceBoard is the first to extend this paradigm to scientific discovery, a domain where agents must not only
-      operate software, but also demonstrate domain understanding, precise control, and multi-step reasoning. From
-      simulating planetary motion in Celestia to manipulating molecular structures in ChimeraX, scientific tasks require
-      agents to execute precise interactions grounded in both visual perception and scientific knowledge.
-    </p>
-
     <div class="text" style="display: flex; align-items: flex-start;">
       <div style="flex: 1;">
-        <p>
+        <p style="padding-right: 12px;">
           As Vision-Language Models (VLMs) power autonomous agents with human-like capabilities to operate mobile devices, significant safety concerns are emerging. The core challenge is that threats can arise even from benign user instructions, stemming from unintended agent-side behaviors. For instance, a simple request to "share today's meeting schedule" could cause an agent to unexpectedly access sensitive private data. In the same process, the agent might send an inappropriate meme, resulting in the sharing of offensive content. These incidents highlight a critical, underexplored area of risk that ranges from inadvertent privacy leakage to compromising system integrity.
         </p>
       </div>
@@ -294,120 +281,27 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
     <h1 class="text">MobileRisk-Live: Testbed for Mobile Agent Safety</h1>
 
     <p class="text">
-      The ScienceBoard Environment offers a dynamic, multimodal platform where agents interact with real scientific
-      software in a virtualized desktop. Built on an Ubuntu-based virtual machine, this environment integrates graphical
-      and command-line interfaces, enabling agents to complete tasks just as human researchers would—by clicking,
-      typing, or issuing terminal commands.
+      To facilitate realistic safety evaluation, the researchers developed MobileRisk-Live, a dynamic sandbox environment. Built upon Android emulators <img src="public/logos/android.png" style="height: 1em; display: inline; vertical-align: baseline;">, this testbed allows mobile agents to execute tasks in real-time while safety detectors monitor their behavior.
     </p>
 
     <img src="public/mobilerisk-live.png" width="100%">
 
     <p class="text">
-      Each software is carefully integrated and adapted to expose internal application states, allowing for fine-grained
-      state tracking and automatic evaluation. Agents perceive the environment through textual (a11ytree), visual
-      (screenshot), or hybrid observation modalities, and operate via a unified action space covering GUI actions, CLI
-      commands, and external API calls.
+      Unlike previous environments, MobileRisk-Live provides a unified interface to capture not only GUI observations (like screenshots and a11ytrees) and agent actions, but also a comprehensive "System State Trace". This trace records critical, non-visible information such as file operations, network activity, and permission changes, enabling a deep and reliable testbed of GUI agent safety.
     </p>
 
 
     <h1 class="text">MobileRisk: A Benchmark of Realistic Trajectories</h1>
 
-    <p class="text">
-      The ScienceBoard Benchmark is a curated suite of 169 high-quality tasks spanning six scientific domains, designed
-      to rigorously evaluate the capabilities of computer-using agents in realistic research scenarios. Each task
-      reflects real-world challenges encountered in scientific workflows, ranging from molecular structure analysis to
-      geospatial modeling and formal proof construction.
-    </p>
-
     <div class="text" style="display: flex; align-items: center;">
       <div id="status" style="display: flex; flex-direction: column; align-items: center; margin-right: 112px;">
-        <div class="table-container" style="margin-bottom: 4px;">
-          <table class="data-table" style="border-collapse: collapse;">
-            <thead>
-              <tr>
-                <th class="tb-hdr">Task Type</th>
-                <th class="tb-hdr">Statistics</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Total Tasks</td>
-                <td style="text-align: right;">169 (100%)</td>
-              </tr>
-              <tr>
-                <td>- GUI</td>
-                <td style="text-align: right;">38 (22.5%)</td>
-              </tr>
-              <tr>
-                <td>- CLI</td>
-                <td style="text-align: right;">33 (19.5%)</td>
-              </tr>
-              <tr>
-                <td class="bottom-border">- GUI + CLI</td>
-                <td class="bottom-border" style="text-align: right;">98 (58.0%)</td>
-              </tr>
-              <tr>
-                <td colspan="2">Difficulty</td>
-              </tr>
-              <tr>
-                <td>- Easy</td>
-                <td style="text-align: right;">91 (53.8%)</td>
-              </tr>
-              <tr>
-                <td>- Medium</td>
-                <td style="text-align: right;">48 (28.4%)</td>
-              </tr>
-              <tr>
-                <td>- Hard</td>
-                <td style="text-align: right;">28 (16.6%)</td>
-              </tr>
-              <tr>
-                <td class="bottom-border">- Open Problems</td>
-                <td class="bottom-border" style="text-align: right;">2 (1.2%)</td>
-              </tr>
-              <tr>
-                <td colspan="2">Instructions</td>
-              </tr>
-              <tr>
-                <td>Average length of task instructions</td>
-                <td style="text-align: right;">20.0</td>
-              </tr>
-              <tr>
-                <td class="bottom-border">Average length of agentic prompts</td>
-                <td class="bottom-border" style="text-align: right;">374.9</td>
-              </tr>
-              <tr>
-                <td colspan="2">Execution</td>
-              </tr>
-              <tr>
-                <td>Average steps</td>
-                <td style="text-align: right;">9.0</td>
-              </tr>
-              <tr>
-                <td class="bottom-border">Average time comsumption</td>
-                <td class="bottom-border" style="text-align: right;">124(s)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <figcaption style="text-align: center; width: 140%; font-size: 1rem">
-          Table: Statistics of ScienceBoard
-        </figcaption>
+        While MobileRisk-Live provides a dynamic testbed, evaluating agent safety also requires a consistent, reproducible benchmark. MobileRisk is a static benchmark created by "freezing" and reconstructing agent-environment interactions from the live sandbox. It is designed to disentangle safety research from the variable performance of different agents. Each data instance in MobileRisk is a fine-grained trajectory containing the complete GUI observations , the System State Trace , and detailed, multi-level safety annotations. These human-provided labels identify whether a trajectory is safe or unsafe , pinpoint the specific step where the first unsafe action occurred , and assign a risk category from a detailed taxonomy. The benchmark includes 102 unsafe and 102 safe cases , featuring "counterpart safe cases" specifically designed to test for false positives.
       </div>
-      <div style="flex-grow: 1;">
+      <div>
         <canvas id="test-dist"></canvas>
       </div>
     </div>
     </div>
-
-
-    <p class="text">
-      Each task is validated and categorized by interface modality (GUI, CLI, or hybrid) and difficulty level, ensuring
-      both diversity and challenge. Notably, ScienceBoard supports cross-application workflows, such as generating
-      reports in TeXstudio based on prior analysis in ChimeraX—enabling end-to-end scientific automation.
-
-      The benchmark pushes beyond QA or code generation, setting a new bar for evaluating agents on tool use, coding,
-      visual/textual reasoning, and domain-specific knowledge in real research contexts. </p>
 
     <hr>
 
@@ -634,32 +528,6 @@ We conduct a comprehensive study of safety issues in mobile GUI agents in this w
 
 <script>
   Chart.defaults.font.family = "Charter";
-  const outerLabels = [
-    "Metamath",
-    "Algebra",
-    "Geometry",
-    "Analysis",
-    "Open Prob.",
-    "Direct Inst.",
-    "Basic Ops.",
-    "Adv. Knowledge",
-    "Comp. Reasoning",
-    "Software Config.",
-    "Struct. Anly.",
-    "Data Interp.",
-    "Struct. Pred.",
-    "Basic Settings",
-    "Spatial Reasoning",
-    "Data Queries",
-    "Simulation",
-    "Basic Manip.",
-    "Map Display",
-    "Image Anly.",
-    "Data Editing",
-    "Basic Usage",
-    "Layout",
-    "Fig. Editing"
-  ];
 
   innerLabels = [
     "Lean4",
@@ -674,40 +542,6 @@ We conduct a comprehensive study of safety issues in mobile GUI agents in this w
     type: "pie",
     data: {
       datasets: [
-        {
-          data: [5, 7, 5, 7, 2, 4, 7, 17, 3, 11, 8, 7, 3, 8, 12, 10, 3, 10, 13, 7, 4, 5, 5, 5],
-          backgroundColor: [
-            "#DCE7F2",
-            "#DCE7F2",
-            "#DCE7F2",
-            "#DCE7F2",
-            "#DCE7F2",
-            "#9AAED3",
-            "#9AAED3",
-            "#9AAED3",
-            "#9AAED3",
-            "#F6D4DA",
-            "#F6D4DA",
-            "#F6D4DA",
-            "#F6D4DA",
-            "#F9F0C8",
-            "#F9F0C8",
-            "#F9F0C8",
-            "#F9F0C8",
-            "#F2F2FB",
-            "#F2F2FB",
-            "#F2F2FB",
-            "#F2F2FB",
-            "#C1EBE3",
-            "#C1EBE3",
-            "#C1EBE3"
-          ],
-          datalabels: {
-            formatter: (value, context) =>
-              outerLabels[context.dataIndex].split(" ").map((item) => item[0]).join("") + ` (${value})`
-                ?? ""
-          }
-        },
         {
           data: [26, 31, 29, 33, 34, 15],
           backgroundColor: [
