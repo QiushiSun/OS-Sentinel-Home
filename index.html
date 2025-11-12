@@ -301,8 +301,36 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
         <canvas id="test-dist"></canvas>
       </div>
     </div>
-    </div>
 
+    <h1 class="text">OS-Sentinel: A Hybrid Framework for Mobile Agent Safety</h1>
+
+    <p class="text">
+      To address the complex safety challenges of mobile GUI agents, the paper introduces OS-Sentinel, a novel hybrid detection framework. This approach is built on the insight that neither rule-based systems nor model-based judges alone are sufficient. Rule-based systems often miss nuanced contextual violations, while pure VLM judges can overlook explicit, non-visible system changes and lack auditability.
+    </p>
+
+    <img src="public/os-sentinel-pipeline.png" width="100%">
+
+    <p class="text">
+      OS-Sentinel synergistically combines two components to achieve comprehensive safety detection:
+      <ol class="text">
+        <li>
+          The Formal Verifier: This component acts as a deterministic, unified rule-based checker that monitors explicit system-level risks. It leverages the System State Trace to perform checks such as:
+          <ol class="ml-4">
+            <li style="margin: 0;">
+              System State Integrity Monitoring: Using cryptographic hashes to detect any unauthorized modifications to file system metadata.
+            </li>
+            <li style="margin: 0;">
+              Sensitive Detection: Using keyword lexicons and regular expressions to flag the presence of sensitive information like passwords, credit card numbers, or personal identifiers.
+            </li>
+          </ol>
+        </li>
+        <li>
+          The Contextual Judge: This component is a VLM/LLM-powered judge that performs semantic analysis to identify context-dependent threats. It is essential for catching risks that the Formal Verifier cannot, such as the inappropriate handling of sensitive data (even if it's just being displayed), social engineering attempts, or the generation of offensive content. It reasons for the agent's actions and the visual GUI to understand intent and behavioral logic.
+          By integrating these two components, OS-Sentinel operates at both the step-level (for real-time safety guards) and the trajectory-level (for post-hoc analysis). A trajectory is flagged as "unsafe" if either the Formal Verifier detects a deterministic violation or the Contextual Judge identifies a semantic risk, ensuring a safety net that is both rigorous and context-aware.
+        </li>
+      </ol>
+    </p>
+    </div>
     <hr>
 
     <div id='visual-representation' class="viusal-representation-block">
@@ -311,10 +339,11 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
       <h2 class="text">Main Settings </h2>
 
       <p class="text">
-        Even state-of-the-art models like GPT-4o and Claude achieve only ~15% average success on ScienceBoard.
-        Open-source agents perform slightly worse, often dropping below 12%, and sometimes approaching 0% in specific
-        task categories—highlighting a significant gap compared to human performance.
-        The results are shown in <a href="#leaderboard">Table 1</a>
+        The experiments demonstrated the consistent superiority of the hybrid OS-Sentinel framework at both the trajectory and step levels.
+      </p>
+
+      <p class="text">
+        <strong>Trajectory-Level Detection</strong>: At the trajectory level, OS-Sentinel achieved substantial improvements over rule-based evaluators, which struggled to capture semantic dependencies in long-horizon tasks. Furthermore, OS-Sentinel consistently outperformed all VLM-as-a-Judge baselines, regardless of the backbone model used. The results highlight the advantage of the hybrid approach: it uses deterministic verification to catch explicit system-level violations while also incorporating agent actions into its contextual analysis.
       </p>
 
       <div id="tab:mobile" style="display: flex; flex-direction: column; align-items: center;">
@@ -449,49 +478,30 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
           </table>
         </div>
         <figcaption style="text-align: center; width: 140%;">
-          Table 1: Performance on AndroidWorld and AndroidControl benchmarks.
+          Table 1: Complete results on MobileRisk after consolidating Precision and Recall into F1. Rule-based evaluators are included as a model-free baseline. For each backbone, we report both its performance as an LLM/VLM-as-a-Judge baseline and as the contextual judge backbone within OS-Sentinel.
         </figcaption>
       </div>
 
       <p class="text">
-        <strong>Domain-Specific Challenges:</strong> Agents perform relatively well on algebra and biochemistry tasks,
-        but struggle significantly in geospatial and astronomy domains. This gap stems from two factors: (1) GUI-heavy
-        interactions in GIS/astronomy are harder to ground visually than CLI-based tasks, and (2) these domains feature
-        dense, complex visuals (e.g., maps, star charts) that strain current models' spatial reasoning abilities.</li>
-      </p>
-      <p class="text">
-        <strong>Impact of Observations:</strong> Multimodal input improves performance. The best results come from
-        combining screenshots with a11ytree representations, offering both visual grounding and structured element data.
-        In contrast, Set-of-Mark (SoM) sometimes introduces noise, especially in visually crowded interfaces like
-        Celestia.
+        <strong>Step-Level Detection</strong>: When evaluated as a real-time safety guard at the step level, OS-Sentinel again outperformed all baselines. This indicates its effectiveness in providing accurate judgments even with the incomplete information available during a single step.
       </p>
 
-      <h2 class="text" id="in-depth-anal">Disentangled Planning and Action </h2>
-      <!-- <p class="text">
-        Then, we evaluate OS-Genesis on web task, using challenging online benchmark: WebArena<d-cite
-          key="zhou2024webarena"></d-cite> as the testbed.
-        The results are shown in <a href="#leaderboard-seeact">Table 2</a>
-      </p> -->
+      <h2 class="text" id="in-depth-anal">Analysis</h2>
 
-      <p class="text">
-        <strong>Modular Design Boosts Performance:</strong> ScienceBoard experiments reveal that separating planning
-        from execution significantly improves performance. When GPT-4o is used solely as a planner and paired with a
-        specialized VLM or GUI action model like OS-ATLAS<d-cite
-        key="wu2025osatlas"></d-cite> or UI-TARS<d-cite
-        key="qin2025uitars"></d-cite> as the executor, success rates increase notably across domains.
-      </p>
-      
-      <div class="text" id="leaderboard-seeact" style="height: 265px;"></div>
-
-      <div class="text"><strong>Implication</strong>: These findings highlight the potential of building multi-agent systems where
-        different components specialize in distinct subtasks—planning, grounding, or domain understanding—paving the way
-        for scalable and adaptable scientific agents.</div>
+      <div class="text" style="display: flex; align-items: flex-start;">
+        <div style="flex: 1;">
+          <p style="padding-right: 12px;">
+            <strong>Category-wise Performance</strong>: A breakdown by risk category showed that OS-Sentinel delivers stronger and more balanced detection across the entire spectrum of unsafe behaviors. In contrast, the baseline methods exhibited clear weaknesses, excelling in some categories but failing significantly in others.
+          </p>
+        </div>
+        <img src="public/os-sentinel-comparative.png" style="width: 40%; min-width: 280px;">
+      </div>
     </div>
 
     <div id="conclusion" style="position: relative; margin-top: 40px; margin-bottom: 0px;">
       <h2 class="text" style="margin-top:0px; margin-bottom:10px">Conclusion</h2>
       <p class="text">
-We conduct a comprehensive study of safety issues in mobile GUI agents in this work. To support realistic safety research, we introduce MobileRisk-Live and MobileRisk, which provide a dynamic sandbox environment and a benchmark of fine-grained annotations, thereby enabling general-purpose and reproducible evaluation. We then propose OS-Sentinel, a novel hybrid detection framework that unifies deterministic verification with contextual risk assessment based on system state traces, multimodal contents, and agent actions, offering broader and deeper coverage than prior approaches.  Extensive experiments and analyses demonstrate the value and reliability of our newly proposed testbeds and strategies.  By contributing infrastructure, methodology, and empirical insights, this work establishes a new paradigm and moves the field forward toward safety-enhanced mobile GUI agents.
+        We conduct a comprehensive study of safety issues in mobile GUI agents in this work. To support realistic safety research, we introduce MobileRisk-Live and MobileRisk, which provide a dynamic sandbox environment and a benchmark of fine-grained annotations, thereby enabling general-purpose and reproducible evaluation. We then propose OS-Sentinel, a novel hybrid detection framework that unifies deterministic verification with contextual risk assessment based on system state traces, multimodal contents, and agent actions, offering broader and deeper coverage than prior approaches.  Extensive experiments and analyses demonstrate the value and reliability of our newly proposed testbeds and strategies.  By contributing infrastructure, methodology, and empirical insights, this work establishes a new paradigm and moves the field forward toward safety-enhanced mobile GUI agents.
       </p>
     </div>
 
