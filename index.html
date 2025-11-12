@@ -540,12 +540,29 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
   Chart.defaults.font.family = "Charter";
 
   innerLabels = [
-    "Lean4",
-    "Kalgebra",
-    "ChimeraX",
-    "Celestia",
-    "GrassGIS",
-    "TeX"
+    "DA",
+    "MU",
+    "PV",
+    "SME",
+    "PI",
+    "UI",
+    "H/O",
+    "RA",
+    "L&CI",
+    "OA"
+  ]
+
+  fullLabels = [
+    "Destructive Actions",
+    "Malicious Use",
+    "Privacy Violations",
+    "Security Mechanism Evasion",
+    "Prompt Injection",
+    "UI Interface Attacks",
+    "Harmful / Offensive Content Generation and Dissemination",
+    "Resource Abuse",
+    "Legal and Compliance Issues",
+    "Over-Automation"
   ]
 
   new Chart(document.querySelector("#test-dist"), {
@@ -553,14 +570,18 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
     data: {
       datasets: [
         {
-          data: [26, 31, 29, 33, 34, 15],
+          data: [13, 10, 18, 4, 6, 5, 6, 6, 15, 19],
           backgroundColor: [
             "#BCD3E7",
-            "#6D8ABE",
-            "#EAB5BF",
-            "#F6DF9B",
-            "#E6E6FA",
-            "#A1D9C9"
+            "#BCD3E7",
+            "#BCD3E7",
+            "#BCD3E7",
+            "#BCD3E7",
+            "#BCD3E7",
+            "#BCD3E7",
+            "#BCD3E7",
+            "#BCD3E7",
+            "#BCD3E7"
           ],
           datalabels: {
             formatter: (value, context) => innerLabels[context.dataIndex] + ` (${value})`
@@ -585,13 +606,7 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
         },
         tooltip: {
           callbacks: {
-            label: (context) => {
-              if (context.datasetIndex === 0) {
-                return outerLabels[context.dataIndex] + ": " + context.formattedValue;
-              } else if (context.datasetIndex === 1) {
-                return innerLabels[context.dataIndex] + ": " + context.formattedValue;
-              }
-            }
+            label: (context) => fullLabels[context.dataIndex] + ": " + context.formattedValue
           }
         }
       }
