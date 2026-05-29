@@ -168,7 +168,7 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
     </div>
   </div>
   <d-article>
-    <div class="byline" style="grid-column-start: 3; grid-column-end: 13;">
+    <div class="byline" style="grid-column-start: 3; grid-column-end: 13; border-bottom: none;">
       <div class="byline-container">
         <p>
           <a href="https://qiushisun.github.io/" class="author-link" target="_blank">Qiushi Sun<sup>*</sup></a> &emsp;
@@ -201,6 +201,13 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
           <img src="public/logos/sjtu.png" style="height: 80px;">
         </p>
       </div>
+    </div>
+
+    <div class="text news-section" style="background: #FBF8F0; border: 1px solid #EAD9B8; border-radius: 12px; padding: 14px 22px 12px 22px; box-sizing: border-box; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+      <h2 style="margin: 0 0 6px 0; font-size: 1.35em; color: #333; font-family: inherit;">📢 News</h2>
+      <p style="margin: 4px 0; font-size: 1.05rem;"><b>2026-04-27</b> 🏆 OS-Sentinel received the <span style="color: #B8860B; font-weight: bold;">Best Paper Award</span> at <a href="https://agentwild-workshop.github.io/" target="_blank"><b>AIWILRD@ICLR'26</b></a>! 🎉✨</p>
+      <p style="margin: 4px 0; font-size: 1.05rem;"><b>2026-04-08</b> 🎊 OS-Sentinel was accepted to <b>ACL'26</b> as an <span style="color: #C0392B; font-weight: bold;">Oral Paper</span>! 🎤🚀</p>
+      <p style="margin: 4px 0; font-size: 1.05rem;"><b>2025-10-29</b> Initial release of our <a href="https://arxiv.org/abs/2510.24411">paper</a>, environment, benchmark, and <a href="#">🌐 Project Website</a>. Check it out! 🚀</p>
     </div>
 
     <p class="text abstract">
@@ -257,14 +264,6 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
       We will release all <a href="https://github.com/OS-Copilot/OS-Sentinel"
         target="_blank">codes for infra</a>, method, and benchmarking pipelines and more
       details. We hope this work can inspire and boost future research advancing the safety of mobile GUI agents.
-    </p>
-
-    <p class="text">
-      <!-- <p class="text ol"><b>2025-08-28</b> We release <a href="https://arxiv.org/abs/2508.20096">CODA</a>, a dual-brain agent that achieves SOTA on ScienceBoard 🧠. </p>
-      <p class="text ol"><b>2025-06-30</b> We release new evaluation results (GUI-Actor, UI-TARS-1.5) and <a href="https://huggingface.co/datasets/OS-Copilot/ScienceBoard-Traj/tree/main">agent trajectories</a>. 🎊 </p>
-      <p class="text ol"><b>2025-06-08</b> ScienceBoard will be presented at <a href="https://www.icml-computeruseagents.com/">WCUA@ICML 2025</a> as an oral paper! 🚀 </p>
-      <p class="text ol"><b>2025-06-04</b> We release the <a href="https://huggingface.co/OS-Copilot/ScienceBoard-Env">virtual machine snapshot</a> of ScienceBoard. 🌏 </p> -->
-      <p class="text ol"><b>2025-10-29</b> Initial release of our <a href="https://arxiv.org/abs/2510.24411">paper</a>, environment, benchmark, and <a href="#">🌐 Project Website</a>. Check it out! 🚀 </p>
     </p>
 
     <h1 class="text">Safety Issues of Mobile GUI Agents</h1>
@@ -346,6 +345,69 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
         <strong>Trajectory-Level Detection</strong>: At the trajectory level, OS-Sentinel achieved substantial improvements over rule-based evaluators, which struggled to capture semantic dependencies in long-horizon tasks. Furthermore, OS-Sentinel consistently outperformed all VLM-as-a-Judge baselines, regardless of the backbone model used. The results highlight the advantage of the hybrid approach: it uses deterministic verification to catch explicit system-level violations while also incorporating agent actions into its contextual analysis.
       </p>
 
+      <style>
+        #leaderboard {
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+          border: 1px solid #E5EAF0;
+        }
+        #leaderboard .data-table {
+          font-size: 13.5px;
+          border-collapse: collapse;
+          width: 100%;
+          font-family: inherit;
+        }
+        #leaderboard .data-table thead .tb-hdr {
+          background: linear-gradient(180deg, #F4F7FB 0%, #EBF0F6 100%);
+          color: #2C3E50;
+          font-weight: 600;
+          padding: 0.7em 0.5em;
+          border: none;
+          letter-spacing: 0.02em;
+        }
+        #leaderboard .data-table thead tr:first-child .tb-hdr {
+          border-bottom: 1px solid #DDE3EA;
+        }
+        #leaderboard .data-table tbody td {
+          padding: 0.5em 0.6em;
+          border-top: 1px solid #EEF1F4;
+          color: #2C3E50;
+        }
+        #leaderboard .data-table tbody tr:hover td {
+          background-color: #F6F9FC;
+        }
+        #leaderboard .data-table tbody tr.bb-row td {
+          background: #FAFBFC;
+          text-align: left !important;
+          font-weight: 600;
+          color: #5D6D7E;
+          font-style: italic;
+          border-top: 1px solid #DDE3EA;
+          padding: 0.6em 0.8em 0.4em 0.8em;
+        }
+        #leaderboard .data-table tbody tr.bb-row:hover td {
+          background: #F3F5F8;
+        }
+        #leaderboard .data-table tbody tr.os-row td {
+          background: #EAF1F8;
+        }
+        #leaderboard .data-table tbody tr.os-row td:first-child {
+          font-style: italic;
+          color: #1B4F72;
+          font-weight: 600;
+        }
+        #leaderboard .data-table tbody b {
+          font-weight: 700;
+          color: #1B4F72;
+        }
+        #leaderboard .data-table tbody tr.os-row:hover td {
+          background: #DEE9F4;
+        }
+        #leaderboard .data-table tbody tr.first-row td {
+          border-top: none;
+        }
+      </style>
       <div id="tab:mobile" style="display: flex; flex-direction: column; align-items: center;">
         <div id="leaderboard" class="table-container">
           <table class="data-table">
@@ -365,7 +427,7 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr class="first-row">
                 <td>Rule-based Evaluators</td>
                 <td>-</td>
                 <td>19.8</td>
@@ -374,11 +436,11 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
                 <td>53.8</td>
                 <td>57.4</td>
               </tr>
-              <tr>
-                <td style="border: 0;">gpt-oss-120B</td>
+              <tr class="bb-row">
+                <td colspan="7">gpt-oss-120B</td>
               </tr>
               <tr>
-                <td>LLM-as-a-Judge </td>
+                <td>LLM-as-a-Judge</td>
                 <td rowspan="2">a11ytree</td>
                 <td>27.3</td>
                 <td>57.4</td>
@@ -386,19 +448,19 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
                 <td>51.0</td>
                 <td>41.9</td>
               </tr>
-              <tr>
+              <tr class="os-row">
                 <td>OS-Sentinel</td>
-                <td>27.6</td>
-                <td>58.3</td>
-                <td>65.3</td>
-                <td>56.9</td>
-                <td>62.1</td>
+                <td><b>27.6</b></td>
+                <td><b>58.3</b></td>
+                <td><b>65.3</b></td>
+                <td><b>56.9</b></td>
+                <td><b>62.1</b></td>
+              </tr>
+              <tr class="bb-row">
+                <td colspan="7">Qwen2.5-VL-7B-Instruct</td>
               </tr>
               <tr>
-                <td style="border: 0;">Qwen2.5-VL-7B-Instruct</td>
-              </tr>
-              <tr>
-                <td>LLM-as-a-Judge </td>
+                <td>LLM-as-a-Judge</td>
                 <td rowspan="2">screenshot</td>
                 <td>25.9</td>
                 <td>56.4</td>
@@ -406,39 +468,39 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
                 <td>56.9</td>
                 <td>48.2</td>
               </tr>
-              <tr>
+              <tr class="os-row">
                 <td>OS-Sentinel</td>
-                <td>26.1</td>
-                <td>57.4</td>
-                <td>65.6</td>
-                <td>60.3</td>
-                <td>66.1</td>
+                <td><b>26.1</b></td>
+                <td><b>57.4</b></td>
+                <td><b>65.6</b></td>
+                <td><b>60.3</b></td>
+                <td><b>66.1</b></td>
+              </tr>
+              <tr class="bb-row">
+                <td colspan="7">GPT-4o</td>
               </tr>
               <tr>
-                <td style="border: 0;">GPT-4o</td>
-              </tr>
-              <tr>
-                <td>LLM-as-a-Judge </td>
+                <td>LLM-as-a-Judge</td>
                 <td rowspan="2">screenshot</td>
-                <td>23.5</td>
+                <td><b>23.5</b></td>
                 <td>60.8</td>
                 <td>56.0</td>
                 <td>56.9</td>
                 <td>40.5</td>
               </tr>
-              <tr>
+              <tr class="os-row">
                 <td>OS-Sentinel</td>
                 <td>23.3</td>
-                <td>60.8</td>
-                <td>66.1</td>
-                <td>60.8</td>
-                <td>64.9</td>
+                <td><b>60.8</b></td>
+                <td><b>66.1</b></td>
+                <td><b>60.8</b></td>
+                <td><b>64.9</b></td>
+              </tr>
+              <tr class="bb-row">
+                <td colspan="7">GPT-4o mini</td>
               </tr>
               <tr>
-                <td style="border: 0;">GPT-4o mini</td>
-              </tr>
-              <tr>
-                <td>LLM-as-a-Judge </td>
+                <td>LLM-as-a-Judge</td>
                 <td rowspan="2">screenshot</td>
                 <td>12.5</td>
                 <td>57.8</td>
@@ -446,19 +508,19 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
                 <td>56.9</td>
                 <td>33.3</td>
               </tr>
-              <tr>
+              <tr class="os-row">
                 <td>OS-Sentinel</td>
-                <td>20.6</td>
-                <td>61.8</td>
-                <td>63.9</td>
-                <td>59.3</td>
-                <td>61.4</td>
+                <td><b>20.6</b></td>
+                <td><b>61.8</b></td>
+                <td><b>63.9</b></td>
+                <td><b>59.3</b></td>
+                <td><b>61.4</b></td>
+              </tr>
+              <tr class="bb-row">
+                <td colspan="7">Claude-3.7-Sonnet</td>
               </tr>
               <tr>
-                <td style="border: 0;">Claude-3.7-Sonnet</td>
-              </tr>
-              <tr>
-                <td>LLM-as-a-Judge </td>
+                <td>LLM-as-a-Judge</td>
                 <td rowspan="2">screenshot</td>
                 <td>19.6</td>
                 <td>58.3</td>
@@ -466,13 +528,33 @@ Introducing OS-Sentinel, a novel <em><strong>hybrid safety detection framework</
                 <td>59.3</td>
                 <td>52.0</td>
               </tr>
-              <tr>
+              <tr class="os-row">
                 <td>OS-Sentinel</td>
-                <td>22.2</td>
-                <td>61.3</td>
-                <td>66.9</td>
-                <td>62.3</td>
-                <td>67.0</td>
+                <td><b>22.2</b></td>
+                <td><b>61.3</b></td>
+                <td><b>66.9</b></td>
+                <td><b>62.3</b></td>
+                <td><b>67.0</b></td>
+              </tr>
+              <tr class="bb-row">
+                <td colspan="7">Claude-4.5-Sonnet</td>
+              </tr>
+              <tr>
+                <td>LLM-as-a-Judge</td>
+                <td rowspan="2">screenshot</td>
+                <td>24.6</td>
+                <td>60.2</td>
+                <td>57.1</td>
+                <td>61.1</td>
+                <td>59.7</td>
+              </tr>
+              <tr class="os-row">
+                <td>OS-Sentinel</td>
+                <td><b>31.4</b></td>
+                <td><b>71.7</b></td>
+                <td><b>73.0</b></td>
+                <td><b>69.1</b></td>
+                <td><b>70.2</b></td>
               </tr>
             </tbody>
           </table>
